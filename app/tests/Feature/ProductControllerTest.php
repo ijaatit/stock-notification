@@ -4,8 +4,10 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use App\Models\Product;
+use App\Models\User;
 
 class ProductControllerTest extends TestCase
 {
@@ -14,12 +16,12 @@ class ProductControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Sanctum::actingAs(User::factory()->create());
     }
 
     public function test_index()
     {
         Product::factory()->count(7)->create();
-
         $response = $this->getJson('/api/products');
         $response->assertSuccessful();
         $response->assertHeader('content-type', 'application/json');
