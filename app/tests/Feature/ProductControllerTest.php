@@ -25,7 +25,7 @@ class ProductControllerTest extends TestCase
         $response = $this->getJson('/api/products');
         $response->assertSuccessful();
         $response->assertHeader('content-type', 'application/json');
-        $response->assertJsonCount(7);
+        $response->assertJsonCount(7, 'data');
     }
 
     public function test_create_new_product()
